@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Proyecto de Cálculo Diferencial</title>
+</head>
+<body>
+    <aside class="side-bar">
+      <h2>Areas Ingresadas:</h2>
+      <hr>
+      <ul id="listaInputs">
+        <!-- generacion de lista de areas ingresadas -->
+        <!-- <button>250 cm²</button> -->
+      </ul>
+    </aside>
+
+    <div class="container">
+      <h1>Optimizador de Volumen de Cilindros</h1>
+      <hr>
+      <br>
+      <p>para poder hacer uso del optimizador debe ingresar el area del cilindro y automaticamente se calcularan sus medidas (radio y altura) para obtener el mayor volumen posible</p>
+      <br>
+      <br>
+      <label for="inputNumero">Ingrese Area del Cilindro a Optimizar:</label>
+      <div class="form-container">
+        
+        <div class="form">
+          <input type="number" id="inputNumero" placeholder="Ej. 3.14">
+          <button id="btnOptimizar">Optimizar Volumen</button>
+          <br>
+          <br>
+          <hr>
+          <div>
+            <p>Superficie (area) = <span>150</span> cm² => 2πr² + 2πrh = <span>150</span></p>
+          </div>
+        </div>
+
+        <div class="imagen">
+          <img src="./Images/cilindro-removebg-preview.png">
+        </div>
+
+      </div>
+    </div>
+
+    <script src="./script.js"></script>
+    <script src="./index.js"></script>
+  </body>
+</html>
