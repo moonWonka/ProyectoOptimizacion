@@ -1,65 +1,76 @@
-// Obtener referencia a los elementos del DOM
-const inputNumero = document.getElementById("inputNumero");
-const btnOptimizar = document.getElementById("btnOptimizar");
-const listaInputs = document.getElementById("listaInputs");
+function calcularConInput(area) {
+  const areaMitad = area / 2;
 
-// Historial de consultas
-const historial = [];
+  // Función original del cilindro
+  const fn = `${areaMitad}*r - π*r^3`;
 
-// Asignar el evento click al botón de optimizar
-btnOptimizar.addEventListener("click", validarInput);
-
-function validarInput() {
-  // Obtener el valor del input
-  const inputValue = inputNumero.value.trim();
-
-  // Verificar si el campo está vacío
-  if (inputValue === "") {
-    alert("Por favor, ingrese un número.");
-    return;
+  const calcularAltura = (radio) => {
+    console.log(radio)
+    return parseFloat(((areaMitad / (3.14 * radio)) - radio).toFixed(2));
   }
 
-  // Verificar si el valor es un número positivo
-  const numero = parseFloat(inputValue);
-  if (isNaN(numero) || numero <= 0) {
-    alert("Por favor, ingrese un número positivo válido.");
-    return;
-  }
+  const calcularVolumen = (radio, altura) => ((3.14 * (radio) ** 2) * altura).toFixed(2);
 
-  // Si pasa las validaciones, agregar a la lista como botón
-  agregarInputALaLista(inputValue);
 
-  // Limpiar el campo después de agregarlo a la lista
-  inputNumero.value = "";
+  // Calcular la derivada
+  const derivar = (fnToDerivar) =>
+    math.derivative(fnToDerivar, 'r', { simplify: true });
+
+  // Obtener los puntos críticos
+  const obtenerCriticos = () => {
+    const raices = [];
+    const pi = 3.14;
+    const a = (areaMitad / 3).toFixed(2);
+    const b = (a / pi).toFixed(2);
+
+    raices.push(parseFloat(Math.sqrt(b).toFixed(2)));
+    raices.push(parseFloat(-Math.sqrt(b).toFixed(2)));
+
+    return raices;
+  };
+
+  // Primera derivada
+  const primeraDerivada = derivar(fn);
+
+  // Obtener la expresión de la segunda derivada
+  const segundaDerivada = derivar(primeraDerivada);
+
+  // Obtener los puntos críticos (raíces)
+  const listaRaices = obtenerCriticos();
+
+  // Evaluar máximos y mínimos
+  const evaluarMaxMin = (raices) => {
+    const expresionLimpia = segundaDerivada.toString().replace('π', '3.14');
+    const fnSegunda = math.simplify(expresionLimpia);
+    const maxMin = { max: 0, min: 0 };
+
+    raices.forEach((raiz) => {
+      let value = fnSegunda.evaluate({ r: raiz }).toFixed(2);
+      value < 0 ? (maxMin.max = raiz) : (maxMin.min = raiz);
+    });
+
+    return maxMin;
+  };
+
+  console.log('Área: ', area);
+  console.log(`La derivada de ${fn} con respecto a r es: ${primeraDerivada}`);
+  console.log(
+    `La derivada de ${primeraDerivada} con respecto a r es: ${segundaDerivada}`
+  );
+  const radio = evaluarMaxMin(listaRaices);
+  const altura = calcularAltura(radio.max)
+  const volumen = calcularVolumen(radio.max, altura)
+
+  return {
+    fnOriginal: fn,
+    primeraD: primeraDerivada.toString(),
+    puntosCriticos: listaRaices,
+    segundaD: segundaDerivada.toString(),
+    maxRadio: radio.max,
+    maxAltura: altura,
+    maxVolumen: volumen
+  };
 }
 
-function agregarInputALaLista(inputValue) {
-  // Crear un nuevo elemento botón y agregarlo a la lista
-  const nuevoBoton = document.createElement("button");
-  nuevoBoton.textContent = `${inputValue} cm²`;
-
-  // Verificar si el input ya está en el historial
-  const indexEnHistorial = historial.indexOf(inputValue);
-  if (indexEnHistorial !== -1) {
-    // Si está, quitarlo del historial
-    historial.splice(indexEnHistorial, 1);
-  }
-
-  // Agregar al principio del historial
-  historial.unshift(inputValue);
-
-  // Mantener el historial hasta un máximo de 9 elementos
-  if (historial.length > 9) {
-    historial.pop(); // Eliminar el último elemento
-  }
-
-  // Limpiar la lista antes de agregar elementos
-  listaInputs.innerHTML = "";
-
-  // Agregar todos los elementos del historial a la lista
-  historial.forEach((element) => {
-    const botonHistorial = document.createElement("button");
-    botonHistorial.textContent = `${element} cm²`;
-    listaInputs.appendChild(botonHistorial);
-  });
-}
+// Exportar la función para que esté disponible para otros archivos
+export { calcularConInput };

@@ -1,15 +1,21 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/12.2.0/math.min.js"
+      integrity="sha512-GMlC1BXIC7Ew3pP+Hgh4s5IMWREkqbVcONOc1Dob5oB/NZa2/NjDrT79NyiqWmS2cLq5yZ5T78CIAr2dcKc51Q=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
     <title>Proyecto de Cálculo Diferencial</title>
-</head>
-<body>
+  </head>
+  <body>
     <aside class="side-bar">
-      <h2>Areas Ingresadas:</h2>
-      <hr>
+      <h2>Areas Ingresadas:</h2>    
+      <hr />
       <ul id="listaInputs">
         <!-- generacion de lista de areas ingresadas -->
         <!-- <button>250 cm²</button> -->
@@ -18,33 +24,35 @@
 
     <div class="container">
       <h1>Optimizador de Volumen de Cilindros</h1>
-      <hr>
-      <br>
-      <p>para poder hacer uso del optimizador debe ingresar el area del cilindro y automaticamente se calcularan sus medidas (radio y altura) para obtener el mayor volumen posible</p>
-      <br>
-      <br>
+      <hr />
+      <br />
+      <p>
+        para poder hacer uso del optimizador debe ingresar el area del cilindro
+        y automaticamente se calcularan sus medidas (radio y altura) para
+        obtener el mayor volumen posible
+      </p>
+      <br />
+      <br />
       <label for="inputNumero">Ingrese Area del Cilindro a Optimizar:</label>
       <div class="form-container">
-        
         <div class="form">
-          <input type="number" id="inputNumero" placeholder="Ej. 3.14">
+          <input type="number" id="inputNumero" placeholder="Ej. 3.14" />
           <button id="btnOptimizar">Optimizar Volumen</button>
-          <br>
-          <br>
-          <hr>
-          <div>
-            <p>Superficie (area) = <span>150</span> cm² => 2πr² + 2πrh = <span>150</span></p>
+          <br />
+          <br />
+          <hr />
+          <div id="resultado">
+            <!-- resultados de la optimizacion -->
           </div>
         </div>
 
         <div class="imagen">
-          <img src="./Images/cilindro-removebg-preview.png">
+          <img src="./Images/cilindro-removebg-preview.png" />
         </div>
-
       </div>
     </div>
 
-    <script src="./script.js"></script>
-    <script src="./index.js"></script>
+    <script type="module" src="./index.js"></script>
+    <!-- <script type="module" src="./script.js"></script> -->
   </body>
 </html>
